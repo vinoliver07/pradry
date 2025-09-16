@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartão Fofo - Andrielly</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+            background-size: 400% 400%;
+            animation: gradient-shift 8s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cute-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 15% 25%, rgba(255, 182, 193, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(255, 192, 203, 0.2) 0%, transparent 40%);
+            animation: gentle-pulse 6s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes gentle-pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 0.9; }
+        }
+
+        .card-container {
+            position: relative;
+            width: 400px;
+            height: 580px;
+            perspective: 1000px;
+            z-index: 10;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%);
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 
+                        0 0 0 1px rgba(255, 255, 255, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .card:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(5deg) scale(1.02);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.25), 
+                        0 0 0 1px rgba(255, 255, 255, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .cute-icon {
+            margin-bottom: 20px;
+            animation: wiggle 3s ease-in-out infinite;
+            filter: drop-shadow(0 3px 10px rgba(255, 154, 158, 0.3));
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-5deg) scale(1.05); }
+            50% { transform: rotate(0deg) scale(1.1); }
+            75% { transform: rotate(5deg) scale(1.05); }
+        }
+
+        .greeting {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #e91e63;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(233, 30, 99, 0.2);
+            animation: fadeInBounce 1s ease-out;
+        }
+
+        .name {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: fadeInBounce 1s ease-out 0.2s both, colorShift 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        .name::after {
+            content: '✨';
+            position: absolute;
+            right: -35px;
+            top: -5px;
+            font-size: 1.5rem;
+            animation: sparkle-rotate 2s linear infinite;
+        }
+
+        @keyframes colorShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes sparkle-rotate {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .message {
+            font-size: 1.1rem;
+            color: #6c5ce7;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            text-shadow: 0 1px 2px rgba(108, 92, 231, 0.1);
+            animation: fadeInBounce 1s ease-out 0.4s both;
+            max-width: 320px;
+        }
+
+        .fun-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            max-width: 280px;
+            animation: fadeInBounce 1s ease-out 0.6s both;
+        }
+
+        .cute-button, .smile-button, .magic-button, .heart-button {
+            border: none;
+            padding: 14px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cute-button {
+            background: linear-gradient(45deg, rgba(255, 154, 158, 0.8), rgba(250, 208, 196, 0.8));
+            color: #e91e63;
+            box-shadow: 0 8px 20px rgba(255, 154, 158, 0.3);
+        }
+
+        .smile-button {
+            background: linear-gradient(45deg, rgba(255, 236, 210, 0.8), rgba(252, 182, 159, 0.8));
+            color: #ff6b9d;
+            box-shadow: 0 8px 20px rgba(252, 182, 159, 0.3);
+        }
+
+        .magic-button {
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+            color: white;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .heart-button {
+            background: linear-gradient(45deg, rgba(240, 147, 251, 0.8), rgba(245, 87, 108, 0.8));
+            color: white;
+            box-shadow: 0 8px 20px rgba(240, 147, 251, 0.4);
+        }
+
+        .cute-button:hover, .smile-button:hover, .magic-button:hover, .heart-button:hover {
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .cute-button:hover { box-shadow: 0 15px 35px rgba(255, 154, 158, 0.5); }
+        .smile-button:hover { box-shadow: 0 15px 35px rgba(252, 182, 159, 0.5); }
+        .magic-button:hover { box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6); }
+        .heart-button:hover { box-shadow: 0 15px 35px rgba(240, 147, 251, 0.6); }
+
+        .floating-hearts {
+            position: absolute;
+            font-size: 1.8rem;
+            animation: float-cute 5s ease-out infinite;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes float-cute {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) translateX(10px) rotate(45deg) scale(1);
+            }
+            50% {
+                transform: translateY(50vh) translateX(-20px) rotate(180deg) scale(1.1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) translateX(15px) rotate(315deg) scale(0.9);
+            }
+            100% {
+                transform: translateY(-10vh) translateX(0) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .cute-explosion {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 154, 158, 0.6) 0%, rgba(255, 192, 203, 0.3) 50%, transparent 100%);
+            animation: cute-burst 0.8s ease-out;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        @keyframes cute-burst {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4) rotate(90deg);
+                opacity: 0;
+            }
+        }
+
+        .emoji-rain {
+            position: absolute;
+            font-size: 2rem;
+            animation: emoji-fall 3s ease-out;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        @keyframes emoji-fall {
+            0% {
+                transform: translateY(-50px) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(0) rotate(180deg) scale(1);
+            }
+            100% {
+                transform: translateY(200px) rotate(360deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        .giggles {
+            position: absolute;
+            font-size: 1.2rem;
+            color: #ff6b9d;
+            font-weight: bold;
+            animation: giggle-bounce 2s ease-out;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        @keyframes giggle-bounce {
+            0% {
+                transform: scale(0) translateY(0);
+                opacity: 0;
+            }
+            30% {
+                transform: scale(1.2) translateY(-20px);
+                opacity: 1;
+            }
+            60% {
+                transform: scale(1) translateY(-40px);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.8) translateY(-80px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.8);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-5px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-container {
+                width: 90vw;
+                height: 80vh;
+            }
+            
+            .greeting {
+                font-size: 1.8rem;
+            }
+            
+            .name {
+                font-size: 2.5rem;
+            }
+            
+            .message {
+                font-size: 1rem;
+            }
+
+            .fun-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cute-bg"></div>
+    
+    <div class="card-container">
+        <div class="card" onclick="createCuteExplosion(event)">
+            <svg class="cute-icon" width="90" height="80" viewBox="0 0 90 80">
+                <defs>
+                    <linearGradient id="cuteGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff9a9e;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#fecfef;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ffecd2;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <!-- Coração principal -->
+                <path d="M45,70 C45,70 20,50 20,35 C20,25 28,18 35,18 C40,18 45,23 45,23 C45,23 50,18 55,18 C62,18 70,25 70,35 C70,50 45,70 45,70 Z" 
+                      fill="url(#cuteGradient)" stroke="#ff6b9d" stroke-width="2"/>
+                <!-- Olhinhos fofos -->
+                <circle cx="35" cy="32" r="2.5" fill="#ff6b9d"/>
+                <circle cx="55" cy="32" r="2.5" fill="#ff6b9d"/>
+                <!-- Bochecha -->
+                <circle cx="28" cy="38" r="3" fill="#ffb3ba" opacity="0.6"/>
+                <circle cx="62" cy="38" r="3" fill="#ffb3ba" opacity="0.6"/>
+                <!-- Sorriso -->
+                <path d="M38,42 Q45,48 52,42" stroke="#ff6b9d" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </svg>
+            
+            <h1 class="greeting">Oiii, gatinha!</h1>
+            <h2 class="name">Andrielly</h2>
+            <p class="message">
+                Você tem esse jeito especial que faz meu dia ficar mais colorido... 
+                tudo que eu quero entre a gente ai ó:
+            </p>
+            
+            <div class="fun-buttons">
+                <button class="cute-button" onclick="sendKiss(event)">
+                    Beijinhos 😘
+                </button>
+                <button class="smile-button" onclick="sendGiggles(event)">
+                    Risadas 😂
+                </button>
+                <button class="magic-button" onclick="createMagic(event)">
+                    Magia ✨
+                </button>
+                <button class="heart-button" onclick="heartExplosion(event)">
+                    Amor 💖
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createFloatingHearts() {
+            const cuteEmojis = ['💕', '😊', '🌸', '✨', '💖', '😄', '🦋', '🌺'];
+            
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-hearts';
+                    heart.textContent = cuteEmojis[Math.floor(Math.random() * cuteEmojis.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 6000);
+                }, i * 200);
+            }
+        }
+
+        function createCuteExplosion(event) {
+            const explosion = document.createElement('div');
+            explosion.className = 'cute-explosion';
+            explosion.style.left = (event.clientX - 75) + 'px';
+            explosion.style.top = (event.clientY - 75) + 'px';
+            document.body.appendChild(explosion);
+            
+            setTimeout(() => {
+                explosion.remove();
+            }, 800);
+            
+            createFloatingHearts();
+        }
+
+        function sendKiss(event) {
+            event.stopPropagation();
+            
+            const card = document.querySelector('.card');
+            card.style.animation = 'wiggle 0.6s ease-in-out';
+            
+            setTimeout(() => {
+                card.style.animation = '';
+            }, 600);
+            
+            // Chuva de beijinhos e corações
+            const kissEmojis = ['😘', '💋', '😍', '🥰', '💕', '💖'];
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'emoji-rain';
+                    emoji.textContent = kissEmojis[Math.floor(Math.random() * kissEmojis.length)];
+                    emoji.style.left = (event.clientX + Math.random() * 200 - 100) + 'px';
+                    emoji.style.top = (event.clientY - 50) + 'px';
+                    document.body.appendChild(emoji);
+                    
+                    setTimeout(() => {
+                        emoji.remove();
+                    }, 3000);
+                }, i * 120);
+            }
+        }
+
+        function sendGiggles(event) {
+            event.stopPropagation();
+            
+            const giggles = ['hehe', 'hihi', 'haha', 'rsrs', 'kkkk'];
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const giggle = document.createElement('div');
+                    giggle.className = 'giggles';
+                    giggle.textContent = giggles[Math.floor(Math.random() * giggles.length)];
+                    giggle.style.left = (event.clientX + Math.random() * 150 - 75) + 'px';
+                    giggle.style.top = (event.clientY + Math.random() * 100 - 50) + 'px';
+                    document.body.appendChild(giggle);
+                    
+                    setTimeout(() => {
+                        giggle.remove();
+                    }, 2000);
+                }, i * 200);
+            }
+            
+            // Emojis de risada
+            const laughEmojis = ['😂', '🤣', '😆', '😹'];
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'emoji-rain';
+                    emoji.textContent = laughEmojis[Math.floor(Math.random() * laughEmojis.length)];
+                    emoji.style.left = (event.clientX + Math.random() * 180 - 90) + 'px';
+                    emoji.style.top = (event.clientY - 30) + 'px';
+                    document.body.appendChild(emoji);
+                    
+                    setTimeout(() => {
+                        emoji.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+
+        function createMagic(event) {
+            event.stopPropagation();
+            
+            // Efeito de estrelas mágicas
+            const magicEmojis = ['✨', '🌟', '💫', '⭐', '🔮', '🎭'];
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const magic = document.createElement('div');
+                    magic.className = 'emoji-rain';
+                    magic.textContent = magicEmojis[Math.floor(Math.random() * magicEmojis.length)];
+                    magic.style.left = (event.clientX + Math.random() * 300 - 150) + 'px';
+                    magic.style.top = (event.clientY - 50) + 'px';
+                    magic.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+                    document.body.appendChild(magic);
+                    
+                    setTimeout(() => {
+                        magic.remove();
+                    }, 3000);
+                }, i * 80);
+            }
+            
+            // Mudança temporária de cor do fundo
+            document.body.style.filter = 'hue-rotate(60deg) saturate(150%)';
+            setTimeout(() => {
+                document.body.style.filter = '';
+            }, 2000);
+        }
+
+        function heartExplosion(event) {
+            event.stopPropagation();
+            
+            // Explosão de corações em círculo
+            const heartEmojis = ['💖', '💕', '💗', '💝', '💘', '❤️', '💓', '💞'];
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'emoji-rain';
+                    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                    
+                    const angle = (i / 20) * 2 * Math.PI;
+                    const radius = 100 + Math.random() * 100;
+                    const x = event.clientX + Math.cos(angle) * radius;
+                    const y = event.clientY + Math.sin(angle) * radius;
+                    
+                    heart.style.left = x + 'px';
+                    heart.style.top = y + 'px';
+                    heart.style.fontSize = (Math.random() * 1 + 1.5) + 'rem';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 50);
+            }
+        }
+
+        // Animação inicial mais sutil
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                createFloatingHearts();
+            }, 2000);
+            
+            // Corações ocasionais
+            setInterval(() => {
+                if (Math.random() > 0.8) {
+                    const cuteEmojis = ['🌸', '✨', '🦋', '💫'];
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-hearts';
+                    heart.textContent = cuteEmojis[Math.floor(Math.random() * cuteEmojis.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.fontSize = '1.5rem';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 5000);
+                }
+            }, 10000);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fc98ff12b9cb3c',t:'MTc1Nzk4NjIxNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
